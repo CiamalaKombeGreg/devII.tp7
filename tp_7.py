@@ -15,20 +15,16 @@ class Fraction:
         PRE : Receive 2 integers which correspond to the numerator and denumerator
         POST : store values in 2 internal variable : self.num and self.den
         """
-        try:
-            num / den
-        except ZeroDivisionError as e:
-            print(
-                f"""A fatal error have occured during the creation : {str(e)}
-                with {num} as numerator and {den} as denumerator"""
-            )
-            den = 1
+        if den == 0:
+            raise ZeroDivisionError("denominator is null")
+        num = int(round(num))
+        den = int(round(den))
         counter = -1 if num >= 0 else 1
         for i in range(num, 0, counter):
             if num % i == 0 and den % i == 0:
-                (num, den) = (num / i, den / i)
-        self.__num = round(num)
-        self.__den = round(den)
+                (num, den) = (num / abs(i), den / abs(i))
+        self.__num = int(num)
+        self.__den = int(den)
 
     @property
     def numerator(self):
