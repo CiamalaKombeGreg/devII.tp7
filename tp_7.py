@@ -97,14 +97,18 @@ class Fraction:
         POST : Return a numerator and denominator from a addition
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        n1 = self.__num * other.denominator
-        n2 = self.__den * other.numerator
-        den = self.__den * other.denominator
-        new_num = n1 + n2
-        return Fraction(new_num, den)
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            n1 = self.__num * other.denominator
+            n2 = self.__den * other.numerator
+            den = self.__den * other.denominator
+            new_num = n1 + n2
+            return Fraction(new_num, den)
+        except AttributeError as ae:
+            print(f"Wrong parameter type : {ae}")
 
     def __sub__(self, other):
         """Overloading of the - operator for fractions
@@ -113,14 +117,18 @@ class Fraction:
         POST : Return a numerator and a denominator from a subtraction
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        n1 = self.__num * other.denominator
-        n2 = self.__den * other.numerator
-        den = self.__den * other.denominator
-        new_num = n1 - n2
-        return Fraction(new_num, den)
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            n1 = self.__num * other.denominator
+            n2 = self.__den * other.numerator
+            den = self.__den * other.denominator
+            new_num = n1 - n2
+            return Fraction(new_num, den)
+        except AttributeError as se:
+            print(f"Wrong parameter type : {se}")
 
     def __mul__(self, other):
         """Overloading of the * operator for fractions
@@ -129,10 +137,14 @@ class Fraction:
         POST : Return a numerator and a denominator from a multiplication
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        return Fraction(self.__num * other.numerator, self.__den * other.denominator)
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            return Fraction(self.__num * other.numerator, self.__den * other.denominator)
+        except AttributeError as me:
+            print(f"Wrong parameter type : {me}")
 
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
@@ -141,10 +153,14 @@ class Fraction:
         POST : Return a numerator and a denominator from a division
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero, the same goes for the other's numerator
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0 or other.numerator == 0:
-            raise ZeroDivisionError("denominator is null")
-        return Fraction(self.__num * other.denominator, self.__den * other.numerator)
+        try:
+            if self.__den == 0 or other.denominator == 0 or other.numerator == 0:
+                raise ZeroDivisionError("denominator is null")
+            return Fraction(self.__num * other.denominator, self.__den * other.numerator)
+        except AttributeError as tde:
+            print(f"Wrong parameter type : {tde}")
 
     def __pow__(self, other):
         """Overloading of the ** operator for fractions
@@ -153,12 +169,16 @@ class Fraction:
         POST : Return a numerator and denominator from by powering the self with the other
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        return Fraction(
-            (self.__num / self.__den) ** (other.numerator / other.denominator)
-        )
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            return Fraction(
+                (self.__num / self.__den) ** (other.numerator / other.denominator)
+            )
+        except AttributeError as pe:
+            print(f"Wrong parameter type : {pe}")
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions
@@ -167,10 +187,14 @@ class Fraction:
         POST : Return true if the two object are equal, return false otherwise
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
+                - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        return self.__num * other.denominator == self.__den * other.numerator
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            return self.__num * other.denominator == self.__den * other.numerator
+        except AttributeError as ee:
+            print(f"Wrong parameter type : {ee}")
 
     def __float__(self):
         """Returns the decimal value of the fraction
@@ -179,9 +203,12 @@ class Fraction:
         POST : Return a float value of his fraction
         RAISE : - ZeroDivisionError ==> If the denominator is equal to zero
         """
-        if self.__den == 0:
-            raise ZeroDivisionError("denominator is null")
-        return self.__num / self.__den
+        try:
+            if self.__den == 0:
+                raise ZeroDivisionError("denominator is null")
+            return self.__num / self.__den
+        except AttributeError as fe:
+            print(f"Wrong parameter type : {fe}")
 
     # ------------------ Properties checking  ------------------
 
@@ -260,13 +287,17 @@ class Fraction:
         PRE : Call himself and a parameter "other" which is a object "Fraction"
         POST : Return True if the absolute value of the difference between the two
                objects is a unit fraction, return False otherwise
+        RAISE : - AttributeError if the parameter other isn't a Fraction object
         """
-        if self.__den == 0 or other.denominator == 0:
-            raise ZeroDivisionError("denominator is null")
-        n1 = self.__num * other.denominator
-        n2 = self.__den * other.numerator
-        new_den = self.__den * other.denominator
-        new_num = n1 - n2
-        result = Fraction(abs(new_num), abs(new_den))
-        final_return = result.is_unit()
-        return final_return
+        try:
+            if self.__den == 0 or other.denominator == 0:
+                raise ZeroDivisionError("denominator is null")
+            n1 = self.__num * other.denominator
+            n2 = self.__den * other.numerator
+            new_den = self.__den * other.denominator
+            new_num = n1 - n2
+            result = Fraction(abs(new_num), abs(new_den))
+            final_return = result.is_unit()
+            return final_return
+        except AttributeError as adje:
+            print(f"Wrong parameter type : {adje}")
