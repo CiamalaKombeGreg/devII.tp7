@@ -97,7 +97,8 @@ class Fraction:
         POST : Return a numerator and denominator from a addition
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
@@ -108,7 +109,10 @@ class Fraction:
             new_num = n1 + n2
             return Fraction(new_num, den)
         except AttributeError as ae:
-            print(f"Wrong parameter type : {ae}")
+            print(f"No required attributs has been found : {ae}")
+            return False
+        except TypeError as tae:
+            print(f"Type is not corresponding : {tae}")
 
     def __sub__(self, other):
         """Overloading of the - operator for fractions
@@ -117,7 +121,8 @@ class Fraction:
         POST : Return a numerator and a denominator from a subtraction
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
@@ -128,7 +133,10 @@ class Fraction:
             new_num = n1 - n2
             return Fraction(new_num, den)
         except AttributeError as se:
-            print(f"Wrong parameter type : {se}")
+            print(f"No required attributs has been found : {se}")
+            return False
+        except TypeError as tse:
+            print(f"Type is not corresponding : {tse}")
 
     def __mul__(self, other):
         """Overloading of the * operator for fractions
@@ -137,14 +145,20 @@ class Fraction:
         POST : Return a numerator and a denominator from a multiplication
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
                 raise ZeroDivisionError("denominator is null")
-            return Fraction(self.__num * other.numerator, self.__den * other.denominator)
+            return Fraction(
+                self.__num * other.numerator, self.__den * other.denominator
+            )
         except AttributeError as me:
-            print(f"Wrong parameter type : {me}")
+            print(f"No required attributs has been found : {me}")
+            return False
+        except TypeError as tme:
+            print(f"Type is not corresponding : {tme}")
 
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
@@ -153,14 +167,20 @@ class Fraction:
         POST : Return a numerator and a denominator from a division
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero, the same goes for the other's numerator
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0 or other.numerator == 0:
                 raise ZeroDivisionError("denominator is null")
-            return Fraction(self.__num * other.denominator, self.__den * other.numerator)
+            return Fraction(
+                self.__num * other.denominator, self.__den * other.numerator
+            )
         except AttributeError as tde:
-            print(f"Wrong parameter type : {tde}")
+            print(f"No required attributs has been found : {tde}")
+            return False
+        except TypeError as ttde:
+            print(f"Type is not corresponding : {ttde}")
 
     def __pow__(self, other):
         """Overloading of the ** operator for fractions
@@ -169,7 +189,8 @@ class Fraction:
         POST : Return a numerator and denominator from by powering the self with the other
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
@@ -178,7 +199,10 @@ class Fraction:
                 (self.__num / self.__den) ** (other.numerator / other.denominator)
             )
         except AttributeError as pe:
-            print(f"Wrong parameter type : {pe}")
+            print(f"No required attributs has been found : {pe}")
+            return False
+        except TypeError as tpe:
+            print(f"Type is not corresponding : {tpe}")
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions
@@ -187,14 +211,18 @@ class Fraction:
         POST : Return true if the two object are equal, return false otherwise
         RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
                 or both are equal to zero
-                - AttributeError if the parameter other isn't a Fraction object
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
                 raise ZeroDivisionError("denominator is null")
             return self.__num * other.denominator == self.__den * other.numerator
         except AttributeError as ee:
-            print(f"Wrong parameter type : {ee}")
+            print(f"No required attributs has been found : {ee}")
+            return False
+        except TypeError as tee:
+            print(f"Type is not corresponding : {tee}")
 
     def __float__(self):
         """Returns the decimal value of the fraction
@@ -208,7 +236,10 @@ class Fraction:
                 raise ZeroDivisionError("denominator is null")
             return self.__num / self.__den
         except AttributeError as fe:
-            print(f"Wrong parameter type : {fe}")
+            print(f"No required attributs has been found : {fe}")
+            return False
+        except TypeError as tfe:
+            print(f"Type is not corresponding : {tfe}")
 
     # ------------------ Properties checking  ------------------
 
@@ -287,7 +318,8 @@ class Fraction:
         PRE : Call himself and a parameter "other" which is a object "Fraction"
         POST : Return True if the absolute value of the difference between the two
                objects is a unit fraction, return False otherwise
-        RAISE : - AttributeError if the parameter other isn't a Fraction object
+        RAISE : - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
         try:
             if self.__den == 0 or other.denominator == 0:
@@ -300,4 +332,7 @@ class Fraction:
             final_return = result.is_unit()
             return final_return
         except AttributeError as adje:
-            print(f"Wrong parameter type : {adje}")
+            print(f"No required attributs has been found : {adje}")
+            return False
+        except TypeError as tadje:
+            print(f"Type is not corresponding : {tadje}")
