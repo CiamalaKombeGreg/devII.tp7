@@ -19,9 +19,9 @@ class Fraction:
                 - AttributError if the parameter doesn't have any attribut
                 - TypeError if the parameter isn't a corresponding value
         """
-        try:
-            if den == 0:
+        if den == 0:
                 raise ZeroDivisionError()
+        try:
             num = int(round(num))
             den = int(round(den))
             counter = -1 if num >= 0 else 1
