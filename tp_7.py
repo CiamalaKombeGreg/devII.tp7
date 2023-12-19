@@ -19,8 +19,12 @@ class Fraction:
                 - AttributError if the parameter doesn't have any attribut
                 - TypeError if the parameter isn't a corresponding value
         """
+        if isinstance(den, list) or isinstance(num, list):
+            raise TypeError("type is not good")
+        if isinstance(den, str) or isinstance(num, str):
+            raise TypeError("type is not good")
         if den == 0:
-                raise ZeroDivisionError()
+            raise ZeroDivisionError("denominator is zero")
         try:
             num = int(round(num))
             den = int(round(den))
