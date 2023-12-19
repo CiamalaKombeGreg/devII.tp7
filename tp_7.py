@@ -20,6 +20,8 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
+            if den == 0:
+                raise ZeroDivisionError()
             num = int(round(num))
             den = int(round(den))
             counter = -1 if num >= 0 else 1
