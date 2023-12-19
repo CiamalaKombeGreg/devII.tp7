@@ -14,17 +14,26 @@ class Fraction:
 
         PRE : Receive 2 integers which correspond to the numerator and denumerator
         POST : store values in 2 internal variable : self.num and self.den
+        RAISE : - ZeroDivisionError ==> If the denominator of one of the two object
+                or both are equal to zero
+                - AttributError if the parameter doesn't have any attribut
+                - TypeError if the parameter isn't a corresponding value
         """
-        if den == 0:
-            raise ZeroDivisionError("denominator is null")
-        num = int(round(num))
-        den = int(round(den))
-        counter = -1 if num >= 0 else 1
-        for i in range(num, 0, counter):
-            if num % i == 0 and den % i == 0:
-                (num, den) = (num / abs(i), den / abs(i))
-        self.__num = int(num)
-        self.__den = int(den)
+        try:
+            num = int(round(num))
+            den = int(round(den))
+            counter = -1 if num >= 0 else 1
+            for i in range(num, 0, counter):
+                if num % i == 0 and den % i == 0:
+                    (num, den) = (num / abs(i), den / abs(i))
+            self.__num = int(num)
+            self.__den = int(den)
+        except AttributeError as ae:
+            print(f"No required attributs has been found : {ae}")
+        except TypeError as tae:
+            print(f"Type is not corresponding : {tae}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     @property
     def numerator(self):
@@ -63,6 +72,7 @@ class Fraction:
 
         PRE : Call himself as a parameter
         POST : Return a reduced version of the fraction given in a mixed form
+        
         """
         if self.__den == 0:
             raise ZeroDivisionError("denominator is null")
@@ -101,8 +111,6 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             n1 = self.__num * other.denominator
             n2 = self.__den * other.numerator
             den = self.__den * other.denominator
@@ -110,9 +118,10 @@ class Fraction:
             return Fraction(new_num, den)
         except AttributeError as ae:
             print(f"No required attributs has been found : {ae}")
-            return False
         except TypeError as tae:
             print(f"Type is not corresponding : {tae}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __sub__(self, other):
         """Overloading of the - operator for fractions
@@ -125,8 +134,6 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             n1 = self.__num * other.denominator
             n2 = self.__den * other.numerator
             den = self.__den * other.denominator
@@ -134,9 +141,10 @@ class Fraction:
             return Fraction(new_num, den)
         except AttributeError as se:
             print(f"No required attributs has been found : {se}")
-            return False
         except TypeError as tse:
             print(f"Type is not corresponding : {tse}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __mul__(self, other):
         """Overloading of the * operator for fractions
@@ -149,16 +157,15 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             return Fraction(
                 self.__num * other.numerator, self.__den * other.denominator
             )
         except AttributeError as me:
             print(f"No required attributs has been found : {me}")
-            return False
         except TypeError as tme:
             print(f"Type is not corresponding : {tme}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __truediv__(self, other):
         """Overloading of the / operator for fractions
@@ -178,9 +185,10 @@ class Fraction:
             )
         except AttributeError as tde:
             print(f"No required attributs has been found : {tde}")
-            return False
         except TypeError as ttde:
             print(f"Type is not corresponding : {ttde}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __pow__(self, other):
         """Overloading of the ** operator for fractions
@@ -193,16 +201,15 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             return Fraction(
                 (self.__num / self.__den) ** (other.numerator / other.denominator)
             )
         except AttributeError as pe:
             print(f"No required attributs has been found : {pe}")
-            return False
         except TypeError as tpe:
             print(f"Type is not corresponding : {tpe}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __eq__(self, other):
         """Overloading of the == operator for fractions
@@ -215,14 +222,13 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             return self.__num * other.denominator == self.__den * other.numerator
         except AttributeError as ee:
             print(f"No required attributs has been found : {ee}")
-            return False
         except TypeError as tee:
             print(f"Type is not corresponding : {tee}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     def __float__(self):
         """Returns the decimal value of the fraction
@@ -232,14 +238,13 @@ class Fraction:
         RAISE : - ZeroDivisionError ==> If the denominator is equal to zero
         """
         try:
-            if self.__den == 0:
-                raise ZeroDivisionError("denominator is null")
             return self.__num / self.__den
         except AttributeError as fe:
             print(f"No required attributs has been found : {fe}")
-            return False
         except TypeError as tfe:
             print(f"Type is not corresponding : {tfe}")
+        except ZeroDivisionError:
+            print("denominator is null")
 
     # ------------------ Properties checking  ------------------
 
@@ -283,9 +288,9 @@ class Fraction:
             raise ZeroDivisionError("denominator is null")
         result = self.__num / self.__den
         if -1 < result < 1:
-            return f"Fraction's absolute value is under 1 : {result}"
+            return "Proper"
         else:
-            return f"Fraction's absolute value is above 1 : {result}"
+            return "Not proper"
 
     def is_unit(self):
         """Check if a fraction's numerator is 1 in its reduced form
@@ -306,9 +311,9 @@ class Fraction:
             if num % i == 0 and den % i == 0:
                 (num, den) = (num / i, den / i)
         if num == 1:
-            return "Reduced form is 1 ==> Good"
+            return "Under 1"
         else:
-            return f"Reduced form isn't 1 ==> {num}"
+            return "Above 1"
 
     def is_adjacent_to(self, other):
         """Check if two fractions differ by a unit fraction
@@ -322,8 +327,6 @@ class Fraction:
                 - TypeError if the parameter isn't a corresponding value
         """
         try:
-            if self.__den == 0 or other.denominator == 0:
-                raise ZeroDivisionError("denominator is null")
             n1 = self.__num * other.denominator
             n2 = self.__den * other.numerator
             new_den = self.__den * other.denominator
@@ -333,6 +336,7 @@ class Fraction:
             return final_return
         except AttributeError as adje:
             print(f"No required attributs has been found : {adje}")
-            return False
         except TypeError as tadje:
             print(f"Type is not corresponding : {tadje}")
+        except ZeroDivisionError:
+            print("denominator is null")
